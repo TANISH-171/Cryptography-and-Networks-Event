@@ -1,6 +1,6 @@
 import random
 
-def simple_key_generation(prime):
+def key_generation(prime):
     """
     Generate public and private keys for the ElGamal cryptosystem with a small prime.
     """
@@ -44,7 +44,7 @@ if __name__ == "__main__":
 
     # Small prime number for simplicity
     prime_number = 131  # Small prime
-    public_key, private_key = simple_key_generation(prime_number)
+    public_key, private_key = key_generation(prime_number)
 
     print("Public Key:", public_key)
     print("Private Key:", private_key)

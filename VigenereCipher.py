@@ -48,13 +48,13 @@ def vigenere_decode(encoded_message, passkey):
 if __name__ == "__main__":
     print("Vigenère Cipher Program")
 
-    user_message = input("Enter the text to encrypt or decrypt: ")
-    user_passkey = input("Enter the keyword for the cipher: ")
+    User_message = input("Enter the text to encrypt or decrypt: ")
+    User_passkey = input("Enter the keyword for the cipher: ")
 
     # Encryption
-    encrypted_output = vigenere_encode(user_message, user_passkey)
+    encrypted_output = vigenere_encode(User_message, User_passkey)
     print("Encrypted Output:", encrypted_output)
 
     # Decryption
-    decrypted_output = vigenere_decode(encrypted_output, user_passkey)
+    decrypted_output = vigenere_decode(encrypted_output, User_passkey)
     print("Decrypted Output:", decrypted_output)

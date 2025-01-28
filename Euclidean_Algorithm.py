@@ -1,17 +1,17 @@
 def extended_euclidean(a, b):
-    """Returns a tuple (gcd, x, y) such that gcd = a * x + b * y."""
+    """Returns a tuple (GCD, x, y) such that GCD = a * x + b * y."""
     if b == 0:
-        return a, 1, 0  # Base case: gcd(a, 0) = a, with x=1 and y=0
+        return a, 1, 0  # Base case: GCD(a, 0) = a, with x=1 and y=0
     else:
-        gcd, x1, y1 = extended_euclidean(b, a % b)
+        GCD, x1, y1 = extended_euclidean(b, a % b)
         x = y1
         y = x1 - (a // b) * y1
-        return gcd, x, y
+        return GCD, x, y
 
 def modular_inverse(a, m):
     """Returns the modular inverse of a under modulo m."""
-    gcd, x, _ = extended_euclidean(a, m)
-    if gcd != 1:
+    GCD, x, _ = extended_euclidean(a, m)
+    if GCD != 1:
         raise ValueError(f"{a} has no modular inverse under modulo {m}")
     return x % m
 
@@ -24,12 +24,12 @@ def main():
     m = int(input("Enter the value of 'm': "))
     
     # Find GCD and coefficients
-    gcd, x, y = extended_euclidean(a, m)
-    print(f"\nGCD of {a} and {m}: {gcd}")
+    GCD, x, y = extended_euclidean(a, m)
+    print(f"\nGCD of {a} and {m}: {GCD}")
     print(f"Coefficients x and y: x = {x}, y = {y}")
     
     # Find modular inverse
-    if gcd == 1:
+    if GCD == 1:
         mod_inv = modular_inverse(a, m)
         print(f"\nModular Inverse of {a} modulo {m}: {mod_inv}")
     else:

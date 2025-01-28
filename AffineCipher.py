@@ -1,7 +1,7 @@
 import string
 from math import gcd
 
-def find_mod_inverse(num, mod):
+def Modular_inverse(num, mod):
     """Find the modular inverse of 'num' under modulo 'mod'."""
     for i in range(mod):
         if (num * i) % mod == 1:
@@ -32,7 +32,7 @@ def affine_decode(encoded_message, key_a, key_b):
     if gcd(key_a, 26) != 1:
         raise ValueError("The key 'key_a' must be coprime with 26.")
 
-    inverse_a = find_mod_inverse(key_a, 26)
+    inverse_a = Modular_inverse(key_a, 26)
     if inverse_a is None:
         raise ValueError("The modular inverse of 'key_a' does not exist.")
 
