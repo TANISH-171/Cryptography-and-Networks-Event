@@ -1,13 +1,3 @@
-import random
-from sympy import isprime
-
-# Function to generate a prime number within a given range
-def generate_prime(start, end):
-    prime = random.randint(start, end)
-    while not isprime(prime):
-        prime = random.randint(start, end)
-    return prime
-
 # Function to compute the greatest common divisor
 def gcd(a, b):
     while b:
@@ -25,67 +15,62 @@ def mod_inverse(a, m):
         x1 += m0
     return x1
 
-# Function to generate RSA keys
-def generate_rsa_keys():
-    print("Generating RSA keys...")
-    
-    # Step 1: Generate two large prime numbers p and q
-    p = generate_prime(100, 200)
-    q = generate_prime(100, 200)
-    
-    # Step 2: Compute n = p * q
+# Simple RSA key generation
+def generate_keys(p, q):
+    # Step 1: Compute n = p * q
     n = p * q
-    
-    # Step 3: Compute Euler's totient function phi(n) = (p-1)*(q-1)
-    phi_n = (p - 1) * (q - 1)
-    
-    # Step 4: Choose e (public exponent), it should be coprime with phi(n)
-    e = random.randint(2, phi_n - 1)
-    while gcd(e, phi_n) != 1:
-        e = random.randint(2, phi_n - 1)
-    
-    # Step 5: Compute d (private exponent), d is the modular inverse of e modulo phi(n)
-    d = mod_inverse(e, phi_n)
-    
-    # Public key (e, n) and private key (d, n)
-    public_key = (e, n)
-    private_key = (d, n)
-    
-    print(f"Generated primes p = {p}, q = {q}")
-    print(f"Public key: {public_key}")
-    print(f"Private key: {private_key}")
-    
-    return public_key, private_key
 
-# Function to encrypt a message using the public key
+    # Step 2: Compute Euler's Totient function phi(n) = (p-1)*(q-1)
+    phi_n = (p - 1) * (q - 1)
+
+    # Step 3: Choose e such that 1 < e < phi(n) and gcd(e, phi(n)) = 1
+    e = 17  # e is typically chosen as 17 or other values
+    while gcd(e, phi_n) != 1:
+        e += 1
+
+    # Step 4: Compute d such that d * e ≡ 1 (mod phi(n))
+    d = mod_inverse(e, phi_n)
+
+    # Return public and private keys
+    return (e, n), (d, n)
+
+# Simple encryption function
 def encrypt(public_key, message):
     e, n = public_key
+    # Encrypt each character of the message
     encrypted_message = [pow(ord(char), e, n) for char in message]
     return encrypted_message
 
-# Function to decrypt a message using the private key
+# Simple decryption function
 def decrypt(private_key, encrypted_message):
     d, n = private_key
+    # Decrypt each character in the encrypted message
     decrypted_message = ''.join([chr(pow(char, d, n)) for char in encrypted_message])
     return decrypted_message
 
 # Main function to interact with the user
 def rsa_interactive():
-    print("Welcome to the RSA Algorithm Interactive Python Program!")
-    
+    print("Welcome to the Simple RSA Algorithm!")
+
+    # User input for primes p and q
+    p = int(input("Enter the first prime number (p): "))
+    q = int(input("Enter the second prime number (q): "))
+
     # Generate RSA keys
-    public_key, private_key = generate_rsa_keys()
-    
-    # Ask the user to input a message
-    message = input("Enter the message to encrypt: ")
-    
-    # Encrypt the message using the public key
+    public_key, private_key = generate_keys(p, q)
+    print(f"Public Key: {public_key}")
+    print(f"Private Key: {private_key}")
+
+    # Input message to encrypt
+    message = input("Enter a message to encrypt: ")
+
+    # Encrypt the message
     encrypted_message = encrypt(public_key, message)
-    print(f"Encrypted message (ciphertext): {encrypted_message}")
-    
-    # Decrypt the message using the private key
+    print(f"Encrypted message: {encrypted_message}")
+
+    # Decrypt the message
     decrypted_message = decrypt(private_key, encrypted_message)
     print(f"Decrypted message: {decrypted_message}")
-    
+
 # Run the interactive function
 rsa_interactive()
